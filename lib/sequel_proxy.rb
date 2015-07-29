@@ -4,7 +4,7 @@ module SequelProxy
   class ProxyList
     attr_accessor :proxies, :head
 
-    def initialize()
+    def initialize
       @proxies = []
     end
 
@@ -15,7 +15,7 @@ module SequelProxy
     def prepare!
       last = LastProxy.new
 
-      self.head = @proxies.reverse.inject(last) do |next_proxy_instance, proxy_class|
+      @head = proxies.reverse.inject(last) do |next_proxy_instance, proxy_class|
         instance = proxy_class.new(next_proxy_instance)
 
         instance
@@ -65,7 +65,7 @@ module SequelProxy
     end
 
     def execute(sql, options=nil, &block)
-      next_proxy.execute(sql, options, &block)
+      next_proxy.execute(sql, options, &block) if next_proxy
     end
   end
 
@@ -87,7 +87,7 @@ module SequelProxy
   def enable!
     Config.proxy_list.prepare!
     Config.adapter.class_eval do
-      def execute_with_proxy(sql, options, &block)
+      def execute_with_proxy(sql, options = nil, &block)
         ::SequelProxy::Config.connection = self
         ::SequelProxy::Config.proxy_list.head.execute(sql, options, &block)
       end
