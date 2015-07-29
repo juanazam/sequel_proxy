@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Juan Azambuja"]
   spec.email         = ["juan@wyeworks.com"]
 
-  spec.summary       = "my super gem"
-  spec.description   = "super description"
+  spec.summary       = "A simple way to define proxies for your Sequel queries"
+  spec.description   = "Small gem to define proxies on Sequel queries for several purposes, nspired on ARProxy"
   spec.homepage      = "TODO: Put your gem's website or public repo URL here."
   spec.license       = "MIT"
 
