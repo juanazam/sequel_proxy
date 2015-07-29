@@ -1,8 +1,8 @@
 # SequelProxy
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/sequel_proxy`. To experiment with that code, run `bin/console` for an interactive prompt.
+Small gem to proxy Sequel queries to do post or after processing for general purposes.
 
-TODO: Delete this and the text above, and describe your gem
+Heavily inspired on [arproxy](https://github.com/cookpad/arproxy) (Thanks!)
 
 ## Installation
 
@@ -22,7 +22,27 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```ruby
+require 'sequel_proxy'
+
+class SimpleProxy < SequelProxy::BaseProxy
+  def execute(sql, opts = nil, &block)
+    puts "Proxied"
+    super
+  end
+end
+
+SequelProxy.configure do |config|
+  config.adapter Sequel::MySQL::Database
+  config.use SimpleProxy
+end
+
+SequelProxy.enable!
+
+MyModel.where(label: "label").first
+# => Proxied
+# => Query Result
+```
 
 ## Development
 
@@ -38,23 +58,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-## Example
-
-```ruby
-require 'sequel_proxy'
-
-class SlowQueryLogger < SequelProxy::BaseProxy
-  def execute(sql, opts=nil, &block)
-    puts "Proxied"
-    super
-  end
-end
-
-SequelProxy.configure do |config|
-  config.adapter Sequel::MySQL::Database
-  config.use SlowQueryLogger
-end
-
-SequelProxy.enable!
-```
