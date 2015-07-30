@@ -52,7 +52,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/sequel_proxy.
+Bug reports and pull requests are welcome on GitHub at https://github.com/juanazam/sequel_proxy.
 
 
 ## License
